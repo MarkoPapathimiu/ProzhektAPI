@@ -1,0 +1,6 @@
+@ProzhektAPI_HostAddress = http://localhost:5177
+
+GET {{ProzhektAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
