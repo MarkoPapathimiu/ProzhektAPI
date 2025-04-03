@@ -3,7 +3,13 @@ using ProzhektAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Connection String
+var connectionString = "";
+
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseSqlServer(connectionString));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

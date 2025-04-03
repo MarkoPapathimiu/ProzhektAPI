@@ -15,6 +15,5 @@ namespace ProzhektAPI.Data.Models
         public int Height { get; set; } //userHeight
         public int Weight { get; set; } //userWeight
         public double? Bmi { get; set; } //userBMI (Nullable)
-
     }
 }
