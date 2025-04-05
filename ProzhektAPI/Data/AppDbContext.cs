@@ -15,6 +15,8 @@ namespace ProzhektAPI.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Workout> Workouts { get; set; }
+        public DbSet<FavoriteWorkout> FavoriteWorkouts { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }
     }
 }

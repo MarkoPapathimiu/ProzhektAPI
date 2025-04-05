@@ -1,0 +1,10 @@
+4/5/2025 2:00AM
+Created database FitnessTrackingDb.
+Added connectionString path in Program.cs
+ConnectionString settings are as follows "Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True";
+Created FavoriteWorkout.cs model.
+Created FavoriteRecipe.cs model.
+Added references to FavoriteWorkout.cs and FavoriteRecipe.cs models in AppDbContext.cs
+Created InitialCreate migration with tables Users, Workouts, Recipes.
+Created AddedFavWorkoutsRecipes migration with tables FavoriteWorkouts, FavoriteRecipes.
+Tested database FitnessTrackingDb through SSMS. Successful.
