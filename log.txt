@@ -8,3 +8,13 @@ Added references to FavoriteWorkout.cs and FavoriteRecipe.cs models in AppDbCont
 Created InitialCreate migration with tables Users, Workouts, Recipes.
 Created AddedFavWorkoutsRecipes migration with tables FavoriteWorkouts, FavoriteRecipes.
 Tested database FitnessTrackingDb through SSMS. Successful.
+
+4/6/2025 12:36AM
+Created UserController.cs in Controllers folder.
+Followed this tutorial for the changes listed below. https://rb.gy/dqecqq
+The UserController constructor assigns the AppDbContext reference to a private field _context.
+Added GetUsers() and GetusersById() methods with the [HttpGet] attribute.
+GetUsers() saves all the users as a c sharp list.
+GetUserById() uses the function Find() to find the user searching by id.
+The function Find() is a better option for searching a table, as stated by the tutorial.
+The [FromRoute] attribute in ASP.NET Core is used to explicitly specify that a parameter should be populated from the route data in the URL.
