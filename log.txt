@@ -18,3 +18,8 @@ GetUsers() saves all the users as a c sharp list.
 GetUserById() uses the function Find() to find the user searching by id.
 The function Find() is a better option for searching a table, as stated by the tutorial.
 The [FromRoute] attribute in ASP.NET Core is used to explicitly specify that a parameter should be populated from the route data in the URL.
+
+4/6/2025 1:48PM
+Added two rows in Users table using SSMS with SQL.
+Tested /api/user/GetUsers and /api/user/GetUserById/{userId} using swagger. Successful.
+
