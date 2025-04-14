@@ -29,3 +29,16 @@ Added LogInDto.cs with only Username and Password for authentication.
 
 4/11/2025
 Just got word that we don't need mappers.
+
+4/14/2025 2:43PM
+Decided to use mappers anyway.
+Added DTOs for GET, POST, PUT, DELETE for Users.
+Created UserMappers.cs with mapper functions to get, create, update User data. Bmi is calculated in a seperate function.
+Mappers connect DTOs to Entities. In controllers we will call mapper functions to connect to DTOs. We won't call DTOs directly.
+The code _context.Users.Add(user); in CreateUser function in UserController uses .Add() EF function that automatically makes a INSERT sql query.
+EF functions don't execute the moment they are called! 
+EF functions make queries ready to be executed. The query is executed only with the function _context.SaveChanges()
+Tested /api/user/CreateUser using swagger. Successful.
+Tested /api/user/UpdateUser using swagger. Successful.
+Tested /api/user/DeleteUser/{userId} using swagger. Successful.
+Added CORS.
