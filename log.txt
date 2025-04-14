@@ -23,3 +23,9 @@ The [FromRoute] attribute in ASP.NET Core is used to explicitly specify that a p
 Added two rows in Users table using SSMS with SQL.
 Tested /api/user/GetUsers and /api/user/GetUserById/{userId} using swagger. Successful.
 
+4/9/2025 12:48PM
+Added UserDto.cs without password for security.
+Added LogInDto.cs with only Username and Password for authentication.
+
+4/11/2025
+Just got word that we don't need mappers.

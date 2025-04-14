@@ -1,0 +1,358 @@
+*Chat said*
+This is **perfect** — thanks for laying it all out so clearly 🙌
+
+You’ve already got a great foundation: a well-structured model, a DTO that hides sensitive data, and clean separation in your controller. Now we just need to:
+
+---
+
+## ✅ 1. Fix a Typo in `UserDto`
+```csharp
+public required string Userame { get; set; }
+```
+Change to:
+```csharp
+public required string Username { get; set; }
+```
+
+---
+
+## ✅ 2. Add Navigation Collections in `User.cs`
+Your `User` entity is missing collections for `FavoriteWorkouts` and `FavoriteRecipes`, which are essential if you want to load a user's favorites.
+
+Update `User.cs`:
+
+```csharp
+public ICollection<FavoriteWorkout> FavoriteWorkouts { get; set; } = new List<FavoriteWorkout>();
+public ICollection<FavoriteRecipe> FavoriteRecipes { get; set; } = new List<FavoriteRecipe>();
+```
+
+This makes it easier to fetch and map related data when you're building richer DTOs.
+
+---
+
+## ✅ 3. Create Mappers
+Let’s define a simple **manual mapper** class that converts a `User` entity to your `UserDto`.
+
+Create a new file:
+### 📄 `UserMapper.cs`
+```csharp
+using ProzhektAPI.Data.Dtos;
+using ProzhektAPI.Data.Models;
+
+namespace ProzhektAPI.Data.Mappers
+{
+    public static class UserMapper
+    {
+        public static UserDto ToDto(User user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Age = user.Age,
+                Height = user.Height,
+                Weight = user.Weight,
+                Bmi = user.Bmi ?? 0 // return 0 if null
+            };
+        }
+    }
+}
+```
+
+You can later expand this to include favorite workouts/recipes if you want.
+
+---
+
+## ✅ 4. Update the Controller to Use the DTO and Mapper
+
+Modify your `UserController.cs` like this:
+
+```csharp
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProzhektAPI.Data;
+using ProzhektAPI.Data.Dtos;
+using ProzhektAPI.Data.Mappers;
+
+namespace ProzhektAPI.Controllers
+{
+    [Route("api/user")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+        public UserController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet("GetUsers")]
+        public IActionResult GetUsers()
+        {
+            var users = _context.Users.ToList();
+            var userDtos = users.Select(UserMapper.ToDto).ToList();
+
+            return Ok(userDtos);
+        }
+
+        [HttpGet("GetUserById/{userId}")]
+        public IActionResult GetUserById(int userId)
+        {
+            var user = _context.Users.Find(userId);
+            if (user == null)
+                return NotFound();
+
+            var dto = UserMapper.ToDto(user);
+            return Ok(dto);
+        }
+    }
+}
+```
+
+Now your API will:
+- Exclude passwords ✅
+- Return clean DTOs ✅
+- Be ready for future extensions (like favorites) ✅
+
+---
+
+## 🧠 Want to Include Favorites?
+
+If you want your `UserDto` to also include:
+- List of favorite **Workout names**
+- List of favorite **Recipe names**
+
+I can help you extend the DTO, mapper, and the query to do eager-loading with `.Include()` and project into a nested DTO.
+
+---
+
+Let me know how far you want to go — just basic info or also the favorites and more nested data? Either way, you’re in great shape already.
+
+
+*User said*
+The idea is that on the frontend website users will be able to sign up, log in, have their data show up on the profile after logged in, be able to add workouts and recipes to their favorites, and their favorite workouts and recipes will show up on their profile. Can you tell me what classes are needed? Any Dtos, or mappers, or models or smth?
+
+*Chat said*
+Love it — you're aiming for a **full-featured user profile page**, and your backend is already very close to being ready! Let’s map out **everything you’ll need** to support this feature **cleanly** using DTOs, mappers, and your existing models.
+
+---
+
+## 🧭 **Feature Goals Recap:**
+
+1. ✅ Sign up a new user  
+2. ✅ Log in (you already have `UserLoginDto`)  
+3. ✅ See user info after login  
+4. ✅ Add workouts/recipes to favorites  
+5. ✅ Show favorite workouts & recipes on profile  
+
+---
+
+## 📦 **Classes You’ll Need**
+
+Here’s the breakdown:
+
+### ✅ **1. Existing Models** — Good to Keep As-Is
+- `User`
+- `Workout`
+- `Recipe`
+- `FavoriteWorkout`
+- `FavoriteRecipe`
+
+✔️ You’ve already defined these perfectly as your **EF Core models** — no need to change them.
+
+---
+
+### ✨ **2. DTOs (Data Transfer Objects)**
+
+You'll need:
+
+#### 🔹 `UserProfileDto`
+Used when displaying the logged-in user's profile with their favorites.
+
+```csharp
+public class UserProfileDto
+{
+    public int Id { get; set; }
+    public required string Username { get; set; }
+    public int Age { get; set; }
+    public int Height { get; set; }
+    public int Weight { get; set; }
+    public double Bmi { get; set; }
+
+    public List<WorkoutDto> FavoriteWorkouts { get; set; } = new();
+    public List<RecipeDto> FavoriteRecipes { get; set; } = new();
+}
+```
+
+#### 🔹 `WorkoutDto` and `RecipeDto`
+Lightweight versions of the entity.
+
+```csharp
+public class WorkoutDto
+{
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public string? Description { get; set; }
+}
+
+public class RecipeDto
+{
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public string? Description { get; set; }
+}
+```
+
+---
+
+### ✨ **3. Mappers**
+
+#### 🔹 `UserMapper.cs`
+```csharp
+using ProzhektAPI.Data.Dtos;
+using ProzhektAPI.Data.Models;
+
+namespace ProzhektAPI.Data.Mappers
+{
+    public static class UserMapper
+    {
+        public static UserProfileDto ToProfileDto(User user)
+        {
+            return new UserProfileDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Age = user.Age,
+                Height = user.Height,
+                Weight = user.Weight,
+                Bmi = user.Bmi ?? 0,
+                FavoriteWorkouts = user.FavoriteWorkouts
+                    .Select(fw => WorkoutMapper.ToDto(fw.Workout)).ToList(),
+                FavoriteRecipes = user.FavoriteRecipes
+                    .Select(fr => RecipeMapper.ToDto(fr.Recipe)).ToList()
+            };
+        }
+    }
+}
+```
+
+#### 🔹 `WorkoutMapper.cs`
+```csharp
+using ProzhektAPI.Data.Dtos;
+using ProzhektAPI.Data.Models;
+
+namespace ProzhektAPI.Data.Mappers
+{
+    public static class WorkoutMapper
+    {
+        public static WorkoutDto ToDto(Workout workout)
+        {
+            return new WorkoutDto
+            {
+                Id = workout.Id,
+                Name = workout.Name,
+                Description = workout.Description
+            };
+        }
+    }
+}
+```
+
+#### 🔹 `RecipeMapper.cs`
+```csharp
+using ProzhektAPI.Data.Dtos;
+using ProzhektAPI.Data.Models;
+
+namespace ProzhektAPI.Data.Mappers
+{
+    public static class RecipeMapper
+    {
+        public static RecipeDto ToDto(Recipe recipe)
+        {
+            return new RecipeDto
+            {
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Description = recipe.Description
+            };
+        }
+    }
+}
+```
+
+---
+
+## 🔁 Controller Changes
+
+In `UserController.cs`, update your `GetUserById` method to return the full profile:
+
+```csharp
+[HttpGet("GetUserProfile/{userId}")]
+public IActionResult GetUserProfile(int userId)
+{
+    var user = _context.Users
+        .Include(u => u.FavoriteWorkouts)
+            .ThenInclude(fw => fw.Workout)
+        .Include(u => u.FavoriteRecipes)
+            .ThenInclude(fr => fr.Recipe)
+        .FirstOrDefault(u => u.Id == userId);
+
+    if (user == null)
+        return NotFound();
+
+    var userProfileDto = UserMapper.ToProfileDto(user);
+    return Ok(userProfileDto);
+}
+```
+
+This will return the full profile — **user info + favorite workouts and recipes**.
+
+---
+
+## ➕ Endpoints You’ll Need
+
+Here’s a high-level list of routes:
+
+| Endpoint | Purpose |
+|---------|--------|
+| `POST /api/user/register` | Sign up |
+| `POST /api/user/login` | Log in (return user + token maybe?) |
+| `GET /api/user/GetUserProfile/{id}` | Return full profile |
+| `POST /api/favorites/workout` | Add workout to favorites |
+| `DELETE /api/favorites/workout/{id}` | Remove workout from favorites |
+| `POST /api/favorites/recipe` | Add recipe to favorites |
+| `DELETE /api/favorites/recipe/{id}` | Remove recipe from favorites |
+
+We can build those next if you're ready for them.
+
+---
+
+## ✅ Summary of What You Need to Add
+
+### DTOs:
+- `UserProfileDto`
+- `WorkoutDto`
+- `RecipeDto`
+
+### Mappers:
+- `UserMapper.ToProfileDto`
+- `WorkoutMapper.ToDto`
+- `RecipeMapper.ToDto`
+
+### Updates:
+- Add navigation properties to `User` (if you haven't yet):
+  ```csharp
+  public ICollection<FavoriteWorkout> FavoriteWorkouts { get; set; } = new();
+  public ICollection<FavoriteRecipe> FavoriteRecipes { get; set; } = new();
+  ```
+
+---
+
+Would you like to move on to:
+- Adding the **favorite workout/recipe endpoints**?
+- Building a simple **register/login** flow?
+- Returning a **token** after login (JWT)?
+
+Let me know what you want to tackle next and we’ll keep the momentum going!
+
+*User said*

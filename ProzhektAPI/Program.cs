@@ -4,7 +4,7 @@ using ProzhektAPI.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Connection String
-var connectionString = "Server=DESKTOP-BDSCUK9\\SQLEXPRESS;Database=FitnessTrackingDb;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
+var connectionString = "Server=localhost\\SQLEXPRESS;Database=FitnessTrackingDb;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => 

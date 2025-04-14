@@ -14,6 +14,7 @@ namespace ProzhektAPI.Controllers
             _context = context;
         }
 
+        // Get all Users from database
         [HttpGet("GetUsers")]
         public IActionResult GetUsers()
         {
@@ -21,6 +22,8 @@ namespace ProzhektAPI.Controllers
             return Ok(users);
         }
 
+        // Get User by ID from database
+        // Used in LogIn and TrackerPage
         [HttpGet("GetUserById/{userId}")]
         public IActionResult GetUserById([FromRoute] int userId)
         {
