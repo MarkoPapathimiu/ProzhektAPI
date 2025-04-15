@@ -27,7 +27,7 @@ Tested /api/user/GetUsers and /api/user/GetUserById/{userId} using swagger. Succ
 Added UserDto.cs without password for security.
 Added LogInDto.cs with only Username and Password for authentication.
 
-4/11/2025
+4/11/2025 8:38PM
 Just got word that we don't need mappers.
 
 4/14/2025 2:43PM
@@ -42,3 +42,6 @@ Tested /api/user/CreateUser using swagger. Successful.
 Tested /api/user/UpdateUser using swagger. Successful.
 Tested /api/user/DeleteUser/{userId} using swagger. Successful.
 Added CORS.
+
+4/15/2025 2:17PM
+Added Login endpoint to UserController.cs

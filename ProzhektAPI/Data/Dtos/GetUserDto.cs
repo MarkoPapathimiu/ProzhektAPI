@@ -8,6 +8,7 @@
         public int Height { get; set; }
         public int Weight { get; set; }
         public double Bmi { get; set; }
+
         // Password is excluded for privacy
     }
 }

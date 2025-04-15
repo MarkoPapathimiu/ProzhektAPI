@@ -39,6 +39,8 @@ namespace ProzhektAPI.Controllers
             return Ok(user);
         }
 
+        // Create new User
+        // Used in Sign Up
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody] PostUserDto payload)
         {
@@ -49,6 +51,7 @@ namespace ProzhektAPI.Controllers
             return Ok(user);
         }
 
+        // Update current User data
         [HttpPut("UpdateUser")]
         public IActionResult UpdateUser([FromBody] PutUserDto payload)
         {
@@ -77,6 +80,19 @@ namespace ProzhektAPI.Controllers
             _context.Users.Remove(user);
             _context.SaveChanges();
             return Ok();
+        }
+
+        // Login Endpoint
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserLoginDto login)
+        {
+            var user = _context.Users.FirstOrDefault(u =>
+                u.Username == login.Username && u.Password == login.Password);
+
+            if (user == null)
+                return Unauthorized("Invalid credentials");
+
+            return Ok(user);
         }
 
         // Add favorite workout
