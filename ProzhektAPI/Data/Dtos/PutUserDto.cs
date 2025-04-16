@@ -2,7 +2,6 @@
 {
     public class PutUserDto
     {
-        public int Id { get; set; }
         public required string Username { get; set; }
         public int Age { get; set; }
         public int Height { get; set; }

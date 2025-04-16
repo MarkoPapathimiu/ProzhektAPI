@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProzhektAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf75a48958cc076af7cdffbdc3e3cbaf8a51e6bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e899cfd9095906b1520a0034c62c512260b0e379")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProzhektAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProzhektAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

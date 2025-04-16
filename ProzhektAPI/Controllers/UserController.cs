@@ -52,10 +52,10 @@ namespace ProzhektAPI.Controllers
         }
 
         // Update current User data
-        [HttpPut("UpdateUser")]
-        public IActionResult UpdateUser([FromBody] PutUserDto payload)
+        [HttpPut("UpdateUser/{userId}")]
+        public IActionResult UpdateUser(int userId, [FromBody] PutUserDto payload)
         {
-            var user = _context.Users.FirstOrDefault(thisId => thisId.Id == payload.Id);
+            var user = _context.Users.FirstOrDefault(thisId => thisId.Id == userId);
             if (user == null)
             {
                 return NotFound();
@@ -65,9 +65,10 @@ namespace ProzhektAPI.Controllers
 
             _context.Users.Update(user);
             _context.SaveChanges();
-            return Ok();
+            return Ok(user);
         }
 
+        // To delete User
         [HttpDelete("DeleteUser/{userId}")]
         public IActionResult DeleteUser([FromRoute] int userId)
         {
@@ -86,6 +87,8 @@ namespace ProzhektAPI.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] UserLoginDto login)
         {
+            Console.WriteLine($"Login attempt: {login.Username}, {login.Password}");
+
             var user = _context.Users.FirstOrDefault(u =>
                 u.Username == login.Username && u.Password == login.Password);
 
@@ -97,8 +100,14 @@ namespace ProzhektAPI.Controllers
 
         // Add favorite workout
         [HttpPost("AddFavoriteWorkout")]
-        public IActionResult AddFavoriteWorkout([FromBody] FavoriteWorkout fav)
+        public IActionResult AddFavoriteWorkout([FromBody] FavoriteWorkoutDto favDto)
         {
+            var fav = new FavoriteWorkout
+            {
+                UserId = favDto.UserId,
+                WorkoutId = favDto.WorkoutId
+            };
+
             _context.FavoriteWorkouts.Add(fav); // Adds a new row in the FavoriteWorkout table
             _context.SaveChanges();            // Save it to the databse
             return Ok("Workout added to favorites");
@@ -132,8 +141,14 @@ namespace ProzhektAPI.Controllers
 
         // Add favorite recipe
         [HttpPost("AddFavoriteRecipe")]
-        public IActionResult AddFavoriteRecipe([FromBody] FavoriteRecipe fav)
+        public IActionResult AddFavoriteRecipe([FromBody] FavoriteRecipeDto favDto)
         {
+            var fav = new FavoriteRecipe
+            {
+                UserId = favDto.UserId,
+                RecipeId = favDto.RecipeId
+            };
+
             _context.FavoriteRecipes.Add(fav);
             _context.SaveChanges();
             return Ok("Recipe added to favorites.");
