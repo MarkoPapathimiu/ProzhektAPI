@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProzhektAPI.Data.Models;
+using ProzhektAPI.Data.Seed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProzhektAPI.Data
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -18,5 +19,14 @@ namespace ProzhektAPI.Data
         public DbSet<FavoriteWorkout> FavoriteWorkouts { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
+        }
     }
+
 }
+
