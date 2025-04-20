@@ -61,7 +61,7 @@ namespace ProzhektAPI.Controllers
                 return NotFound();
             }
 
-            UserMappers.ToUpdateUserDto(user, payload);
+            UserMappers.ToPutUserDto(user, payload);
 
             _context.Users.Update(user);
             _context.SaveChanges();

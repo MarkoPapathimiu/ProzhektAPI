@@ -5170,23 +5170,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ergi\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ergi\\Desktop\\ProjektiGit\\ProzhektAPI\\ProzhektAPI\\ProzhektAPI.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Projects\\FitnessHub\\ProzhektAPI\\ProzhektAPI\\ProzhektAPI.csproj",
       "projectName": "ProzhektAPI",
-      "projectPath": "C:\\Users\\Ergi\\Desktop\\ProjektiGit\\ProzhektAPI\\ProzhektAPI\\ProzhektAPI.csproj",
-      "packagesPath": "C:\\Users\\Ergi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ergi\\Desktop\\ProjektiGit\\ProzhektAPI\\ProzhektAPI\\obj\\",
+      "projectPath": "C:\\Users\\User\\Projects\\FitnessHub\\ProzhektAPI\\ProzhektAPI\\ProzhektAPI.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Projects\\FitnessHub\\ProzhektAPI\\ProzhektAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ergi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

@@ -34,7 +34,7 @@ namespace ProzhektAPI.Data.Mappers
             };
         }
 
-        public static void ToUpdateUserDto(User user, PutUserDto dto)
+        public static void ToPutUserDto(User user, PutUserDto dto)
         {
             // Id is already added
             // Password can't be changed
