@@ -96,6 +96,12 @@ This is the backend REST API for the **Fitness Tracking** web application. Built
 
 ---
 
+## Related Repositories
+
+- **Backend:** [ProzhektAPI](https://github.com/MarkoPapathimiu/ProzhektAPI)
+
+---
+
 ## CORS Support
 
 CORS is configured in `Program.cs`:
